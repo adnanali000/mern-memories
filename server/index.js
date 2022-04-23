@@ -3,11 +3,15 @@ import bodyParser from "body-parser";
 import cors from 'cors';
 import mongoose from "mongoose";
 import dotenv from 'dotenv';
+import postRoutes from './routes/posts.js';
 
+
+dotenv.config();
 
 const app = express();
 
-dotenv.config();
+//all postRoutes routes are start with /posts
+app.use('/posts',postRoutes);
 
 //setting body parser to send our request
 app.use(bodyParser.json({ limit: "30mb", extended: true}));
