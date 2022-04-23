@@ -10,13 +10,15 @@ dotenv.config();
 
 const app = express();
 
-//all postRoutes routes are start with /posts
-app.use('/posts',postRoutes);
 
 //setting body parser to send our request
 app.use(bodyParser.json({ limit: "30mb", extended: true}));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true}));
 app.use(cors());
+
+
+//all postRoutes routes are start with /posts
+app.use('/posts',postRoutes);
 
 //db connection
 const CONNECTION_URL = process.env.APP_CONNECTION_URL;
