@@ -7,22 +7,33 @@ import {GoogleLogin} from 'react-google-login'
 import Icon from './icon'
 import {useDispatch} from 'react-redux';
 import {useNavigate} from 'react-router-dom'
+import {signin, signup} from '../../actions/auth';
+
+const initialState = {firstName: '', lastName: '', email: '', password: '', confirmPassword:''}
 
 const Auth = () => {
   const [showPassword,setShowPassword] = useState(false);
   const [isSignup , setIsSignup] = useState(false);
+  const [formData,setFormData] = useState(initialState)
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const classes = useStyles();
 
 
-  const handleSubmit = ()=>{
+  const handleSubmit = (e)=>{
+    e.preventDefault();
+
+    if(isSignup){
+      dispatch(signup(formData,navigate))
+    }else{
+      dispatch(signin(formData,navigate))
+    }
 
   }
 
-  const handleChange = ()=>{
-
+  const handleChange = (e)=>{
+    setFormData({ ...formData, [e.target.name]: e.target.value})
   }
 
   const googleSuccess = async (res)=>{
@@ -48,7 +59,7 @@ const Auth = () => {
 
   const switchMode = () => {
     setIsSignup((prevIsSignup) => !prevIsSignup)
-    handleShowPassword(false)
+    setShowPassword(false)
   }
 
   return (
@@ -75,7 +86,7 @@ const Auth = () => {
           <Button type="submit" fullWidth variant="contained" color="primary" className={classes.submit}>
             {isSignup ? 'Sign Up' : 'Sign In'}
           </Button>
-          <GoogleLogin 
+          {/* <GoogleLogin 
             
               clientId='GOOGLE CLIENT ID'
               render={(renderProps)=>(
@@ -88,7 +99,7 @@ const Auth = () => {
               onFailure={googleFailure}
               cookiePolicy="single_host_origin"
 
-          />
+          /> */}
           <Grid container justify="flex-end">
             <Grid item>
               <Button onClick={switchMode}>

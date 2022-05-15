@@ -4,6 +4,7 @@ import cors from 'cors';
 import mongoose from "mongoose";
 import dotenv from 'dotenv';
 import postRoutes from './routes/posts.js';
+import userRoutes from './routes/users.js';
 
 
 dotenv.config();
@@ -19,6 +20,9 @@ app.use(cors());
 
 //all postRoutes routes are start with /posts
 app.use('/posts',postRoutes);
+
+//all auth route start with /user
+app.use('/user',userRoutes)
 
 //db connection
 const CONNECTION_URL = process.env.APP_CONNECTION_URL;
